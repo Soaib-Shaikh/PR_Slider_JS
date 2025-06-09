@@ -1,6 +1,6 @@
-Slider
+Slider : A simple and responsive image slider built with HTML, CSS, and JavaScript.
 
-Link: 
+Link: https://pr-slider-js.vercel.app/
 
 Output: 
 

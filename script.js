@@ -22,3 +22,5 @@ function prevSlide() {
     if (currentSlide < 0) currentSlide = slides.length - 1;
     showSlide(currentSlide);
 }
+
+setInterval(nextSlide,5000);

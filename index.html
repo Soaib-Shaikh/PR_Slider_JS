@@ -2,141 +2,193 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slider</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(360deg, #fdf6e3 0%, #a8edea 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(360deg, #fdf6e3 0%, #a8edea 100%);
+      overflow-x: hidden;
+    }
 
-        .carousel-inner {
-            position: relative;
-            width: 100%;
-            height: 500px;
-        }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #222;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
 
-        .slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-        .slide.active {
-            display: block;
-            animation: fade 0.8s ease-in-out;
-        }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
 
-        @keyframes fade {
-            from {
-                opacity: 0;
-                transform: scale(1.01);
-            }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+    nav ul li a:hover {
+      color: #ffc107;
+    }
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-        }
+    .hero-section {
+      padding-top: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            z-index: 5;
-            transition: background-color 0.3s ease;
-        }
+    .slider-container {
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
+      height: 500px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
 
-        button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
+    .slide {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      animation: fade 1s ease-in-out;
+    }
 
-        button:nth-of-type(1) {
-            left: 20px;
-        }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        button:nth-of-type(2) {
-            right: 20px;
-        }
+    .slide.active {
+      display: block;
+    }
 
-        @media (max-width: 768px) {
-            .carousel-inner {
-                height: 300px;
-            }
+    @keyframes fade {
+      0% {
+        opacity: 0;
+        transform: scale(1.02);
+      }
 
-            button {
-                padding: 8px 14px;
-                font-size: 14px;
-            }
-        }
-    </style>
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .nav-buttons {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .nav-buttons button {
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .slider-container {
+        height: 300px;
+      }
+
+      .nav-buttons button {
+        padding: 8px 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 mx-auto">
-                <div class="carousel">
-                    <div id="carousel-inner" class="carousel-inner d-flex">
-                        <div class="slide active">
-                            <img src="./assest/1.jpg" alt="Nature 1">
-                        </div>
-                        <div class="slide">
-                            <img src="./assest/8.avif" alt="Nature 2">
-                        </div>
-                        <div class="slide">
-                            <img src="./assest/3.jpg" alt="Nature 3">
-                        </div>
-                        <div class="slide">
-                            <img src="./assest/4.webp" alt="Nature 4">
-                        </div>
-                        <div class="slide">
-                            <img src="./assest/6.jpg" alt="Nature 5">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center mt-4">
-                        <button onclick="prevSlide()" class="btn">Prev</button>
-                        <button onclick="nextSlide()" class="btn">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Slider</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Slider -->
+  <section class="hero-section">
+    <div class="slider-container">
+      <div class="slide active">
+        <img src="./assest/1.jpg" alt="Slide 1">
+      </div>
+      <div class="slide">
+        <img src="./assest/8.avif" alt="Slide 2">
+      </div>
+      <div class="slide">
+        <img src="./assest/3.jpg" alt="Slide 3">
+      </div>
+      <div class="slide">
+        <img src="./assest/4.webp" alt="Slide 4">
+      </div>
+      <div class="slide">
+        <img src="./assest/6.jpg" alt="Slide 5">
+      </div>
+
+      <!-- Prev / Next Buttons -->
+      <div class="nav-buttons">
+        <button onclick="prevSlide()">❮</button>
+        <button onclick="nextSlide()">❯</button>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./script.js"></script>
+  </section>
+
+  <script src="./script.js"></script>
 </body>
 
 </html>

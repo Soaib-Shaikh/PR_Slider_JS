@@ -1,26 +1,19 @@
-let carouselInner = document.getElementById('carousel-inner');
-let slides = document.querySelectorAll('.slide');
 let currentSlide = 0;
+    const slides = document.querySelectorAll(".slide");
 
-function showSlide(index) {
-    slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        if (i === index) {
-            slide.classList.add('active');
-        }
-    });
-}
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove("active"));
+      slides[index].classList.add("active");
+    }
 
-function nextSlide() {
-    currentSlide++;
-    if (currentSlide >= slides.length) currentSlide = 0;
-    showSlide(currentSlide);
-}
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
 
-function prevSlide() {
-    currentSlide--;
-    if (currentSlide < 0) currentSlide = slides.length - 1;
-    showSlide(currentSlide);
-}
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
 
-setInterval(nextSlide,5000);
+    setInterval(nextSlide, 5000);

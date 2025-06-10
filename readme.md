@@ -4,7 +4,7 @@ Link: https://pr-slider-js.vercel.app/
 
 Output: 
 
-![alt text](./output/image1.png)
+![alt text](./output/image.png)
 
 Features:
 
